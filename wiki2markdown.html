@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<script type="text/javascript">
+<!--
+String.prototype.replaceAll = function (org, dest){  
+  return this.split(org).join(dest);  
+}
+
+function replaceAll2(expression, org, dest){  
+    return expression.split(org).join(dest);  
+}
+
+function pw2mkdn(val) {
+	val = val.replaceAll("%%","~~");
+	val = val.replaceAll("---","  - ");
+	val = val.replaceAll("--"," - ");
+	val = val.replaceAll("***","###");
+	val = val.replaceAll("**","##");
+	val = val.replaceAll("----","---");
+	val = val.replaceAll("#pre","```");
+	val = val.replaceAll("}}","```");
+	val = val.replaceAll("[[","[");
+	val = val.replaceAll("]]",")");
+	val = val.replaceAll(":http","](http");
+	return val;
+}
+
+function optionalconv(val) {
+	var ret = val.replace(/--.*\&new{.*};/g,'');
+	ret = ret.replace(/ \[#.*\]/g,'');
+	return ret;
+}
+
+function reset(target) {
+	document.getElementById(target).value = '';
+}
+
+function toleft() {
+	var left = document.getElementById('pukiwiki').value;
+	var right = pw2mkdn(left);
+	right = optionalconv(right);
+	document.getElementById('markdown').value = right;
+}
+// --></script>
+</head>
+
+<body>
+
+<table>
+<tr>
+	<td>
+
+		<p>Pukiwiki</p>
+		<p><input type="button" id="clear1" value="clear" onClick="reset('pukiwiki')"></p>
+		<textarea id="pukiwiki" cols=50 rows=30></textarea>
+	</td>
+	<td>
+		<input type="button" id="toleft" value=">>" onClick="toleft()"><br>
+		<input type="button" id="toright" value="<<">
+	</td>
+	<td>
+		<p>Markdown</p>
+		<p><input type="button" id="clear2" value="clear" onClick="reset('markdown')"></p>
+		<textarea id="markdown" cols=50 rows=30></textarea>
+	</td>
+</tr>
+</table>
+
+
+</body>
+</html>
+
