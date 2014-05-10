@@ -29,6 +29,19 @@ function pw2mkdn(val) {
 	return val;
 }
 
+function pw2mkdnLine(val) {
+	val = val.replace(/\r\n|\r/g, "\n");
+	var lines = val.split('\n');
+	var retString = "";
+	for (var i=0; i < lines.length; i++) {
+		lines[i] = lines[i].replace(/^-(.+)$/,"- $1");
+		lines[i] = lines[i].replace(/^\*(.+)$/,"\# $1");
+		retString += lines[i];
+		retString += '\n';
+	}
+	return retString
+}
+
 function optionalconv(val) {
 	var ret = val.replace(/--.*\&new{.*};/g,'');
 	ret = ret.replace(/ \[#.*\]/g,'');
@@ -42,6 +55,7 @@ function reset(target) {
 function toleft() {
 	var left = document.getElementById('pukiwiki').value;
 	var right = pw2mkdn(left);
+	right = pw2mkdnLine(right);
 	right = optionalconv(right);
 	document.getElementById('markdown').value = right;
 }
