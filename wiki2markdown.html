@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>Pukiwiki記法 - Markdown記法 簡易変換</title>
 <script type="text/javascript">
 <!--
 String.prototype.replaceAll = function (org, dest){  
@@ -15,13 +16,16 @@ function replaceAll2(expression, org, dest){
 }
 
 function pw2mkdn(val) {
+	val = val.replaceAll("~","  ");
 	val = val.replaceAll("%%","~~");
 	val = val.replaceAll("---","  - ");
 	val = val.replaceAll("--"," - ");
+	val = val.replaceAll("+++","  1. ");
+	val = val.replaceAll("++"," 1. ");
 	val = val.replaceAll("***","###");
 	val = val.replaceAll("**","##");
 	val = val.replaceAll("----","---");
-	val = val.replaceAll("#pre","```");
+	val = val.replaceAll("#pre{{","```");
 	val = val.replaceAll("}}","```");
 	val = val.replaceAll("[[","[");
 	val = val.replaceAll("]]",")");
@@ -35,6 +39,7 @@ function pw2mkdnLine(val) {
 	var retString = "";
 	for (var i=0; i < lines.length; i++) {
 		lines[i] = lines[i].replace(/^-(.+)$/,"- $1");
+		lines[i] = lines[i].replace(/^\+(.+)$/,"1\. $1");
 		lines[i] = lines[i].replace(/^\*(.+)$/,"\# $1");
 		retString += lines[i];
 		retString += '\n';
@@ -70,16 +75,16 @@ function toleft() {
 
 		<p>Pukiwiki</p>
 		<p><input type="button" id="clear1" value="clear" onClick="reset('pukiwiki')"></p>
-		<textarea id="pukiwiki" cols=50 rows=30></textarea>
+		<textarea id="pukiwiki" cols=60 rows=45></textarea>
 	</td>
 	<td>
 		<input type="button" id="toleft" value=">>" onClick="toleft()"><br>
-		<input type="button" id="toright" value="<<">
+<!--		<input type="button" id="toright" value="<<">-->
 	</td>
 	<td>
 		<p>Markdown</p>
 		<p><input type="button" id="clear2" value="clear" onClick="reset('markdown')"></p>
-		<textarea id="markdown" cols=50 rows=30></textarea>
+		<textarea id="markdown" cols=60 rows=45></textarea>
 	</td>
 </tr>
 </table>
