@@ -16,7 +16,6 @@ function replaceAll2(expression, org, dest){
 }
 
 function pw2mkdn(val) {
-	val = val.replaceAll("~","  ");
 	val = val.replaceAll("%%","~~");
 	val = val.replaceAll("---","  - ");
 	val = val.replaceAll("--"," - ");
@@ -41,6 +40,7 @@ function pw2mkdnLine(val) {
 		lines[i] = lines[i].replace(/^-(.+)$/,"- $1");
 		lines[i] = lines[i].replace(/^\+(.+)$/,"1\. $1");
 		lines[i] = lines[i].replace(/^\*(.+)$/,"\# $1");
+		lines[i] = lines[i].replace(/^(.+)([^\~])\~$/,"$1$2  ");
 		retString += lines[i];
 		retString += '\n';
 	}
