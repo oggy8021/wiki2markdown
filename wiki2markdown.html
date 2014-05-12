@@ -17,13 +17,6 @@ function replaceAll2(expression, org, dest){
 
 function pw2mkdn(val) {
 	val = val.replaceAll("%%","~~");
-	val = val.replaceAll("---","  - ");
-	val = val.replaceAll("--"," - ");
-	val = val.replaceAll("+++","  1. ");
-	val = val.replaceAll("++"," 1. ");
-	val = val.replaceAll("***","###");
-	val = val.replaceAll("**","##");
-	val = val.replaceAll("----","---");
 	val = val.replaceAll("#pre{{","```");
 	val = val.replaceAll("}}","```");
 	val = val.replaceAll("[[","[");
@@ -37,10 +30,17 @@ function pw2mkdnLine(val) {
 	var lines = val.split('\n');
 	var retString = "";
 	for (var i=0; i < lines.length; i++) {
-		lines[i] = lines[i].replace(/^-(.+)$/,"- $1");
-		lines[i] = lines[i].replace(/^\+(.+)$/,"1\. $1");
-		lines[i] = lines[i].replace(/^\*(.+)$/,"\# $1");
 		lines[i] = lines[i].replace(/^(.+)([^\~])\~$/,"$1$2  ");
+		lines[i] = lines[i].replace(/^\-\-\-\-$/,"\-\-\-");
+		lines[i] = lines[i].replace(/^\-\-\-([^\-])(.*)$/,"  \- $1$2");
+		lines[i] = lines[i].replace(/^\-\-([^\-])(.*)$/," \- $1$2");
+		lines[i] = lines[i].replace(/^\-([^\-])(.*)$/,"\- $1$2");
+		lines[i] = lines[i].replace(/^\+\+\+([^\+])(.*)$/,"  1\. $1$2");
+		lines[i] = lines[i].replace(/^\+\+([^\+])(.*)$/," 1\. $1$2");
+		lines[i] = lines[i].replace(/^\+([^\+])(.*)$/,"1\. $1$2");
+		lines[i] = lines[i].replace(/^\*\*\*([^\*])(.*)$/,"\#\#\#$1$2");
+		lines[i] = lines[i].replace(/^\*\*([^\*])(.*)$/,"\#\#$1$2");
+		lines[i] = lines[i].replace(/^\*([^\*])(.*)$/,"\#$1$2");
 		retString += lines[i];
 		retString += '\n';
 	}
