@@ -41,6 +41,8 @@ function pw2mkdnLine(val) {
 		lines[i] = lines[i].replace(/^\*\*\*([^\*])(.*)$/,"\#\#\#$1$2");
 		lines[i] = lines[i].replace(/^\*\*([^\*])(.*)$/,"\#\#$1$2");
 		lines[i] = lines[i].replace(/^\*([^\*])(.*)$/,"\#$1$2");
+		lines[i] = lines[i].replace(/^(.*)\'\'\'(.*)\'\'\'(.*)$/,"$1\*\*\*$2\*\*\*$3");
+		lines[i] = lines[i].replace(/^(.*)\'\'(.*)\'\'(.*)$/,"$1\*\*$2\*\*$3");
 		retString += lines[i];
 		retString += '\n';
 	}
